@@ -101,7 +101,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 /**
  * Default Touch Mode Language
@@ -144,7 +144,7 @@
 
 //                       PLA      PETG       ABS
 #define PREHEAT_BED      {60,      70,       100}
-#define PREHEAT_HOTEND   {200,     250,      230}
+#define PREHEAT_HOTEND   {220,     230,      250}
 
 #define HEAT_MAX_TEMP    {150,    275,       275,       275,       275,       275,       275}    //max temperature can be set
 #define HEAT_SIGN_ID     {"B:",   "T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:"}
@@ -177,9 +177,9 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 235
-#define Y_MAX_POS 235
-#define Z_MAX_POS 250
+#define X_MAX_POS 305
+#define Y_MAX_POS 305
+#define Z_MAX_POS 390
 
 // Specify a pause position as { X, Y, Z_raise }
 #define NOZZLE_PAUSE_RETRACT_LENGTH 15   // (mm)
