@@ -24,6 +24,7 @@
     #define RU_POINT_2                "Точка 2"
     #define RU_POINT_3                "Точка 3"
     #define RU_POINT_4                "Точка 4"
+    #define RU_POINT_5                "Точка 5"
     #define RU_ABL                    "ABL"
     #define RU_BLTOUCH_TEST           "BLT тест"
     #define RU_BLTOUCH_DEPLOY         "BLT вниз"
@@ -37,6 +38,7 @@
     #define RU_DEC                    "Уменьшить"
     #define RU_NOZZLE                 "Сопло"
     #define RU_BED                    "Стол"
+    #define RU_CHAMBER                "Камера"
     #define RU_STOP                   "Стоп"
     #define RU_BACK                   "Назад"
     #define RU_PAGE_UP                "\u0899 Стр." //Left Arrow
@@ -173,7 +175,7 @@
     #define RU_LIN_ADVANCE            "К-фактор"
     #define RU_RESET                  "Сброс"
     #define RU_RESET_SETTINGS_INFO    "Все настройки будут\nсброшены по умолчанию.\nПродолжить?"
-    #define RU_RESET_SETTINGS_DONE    "Успешный сброс настроек\nэкрана. Для полного \nвступления в силу,\nперегрузите устройство."
+    #define RU_RESET_SETTINGS_DONE    "Успешный сброс настроек\nэкрана. Для полного\nвступления в силу,\nперегрузите устройство."
     #define RU_INFO                   "\u0884 Информация" //Info Sign
     #define RU_LCD_BRIGHTNESS         "Яркость LCD"
     #define RU_LCD_BRIGHTNESS_DIM     "Регулировка яркости LCD"
@@ -186,6 +188,7 @@
     #define RU_300_SECONDS            "5 мин."
     #define RU_CUSTOM_SECONDS         "Своё"
     #define RU_ST7920_FULLSCREEN      "Marlin на весь экран"
+    #define RU_PLR_EN                 "Работа после потери питания"
     #define RU_SETTING_RESET          "Сброс настроек"
     #define RU_SETTING_RESTORE        "Восстановление настроек"
     #define RU_EEPROM_SAVE_INFO       "Сохранить настройки\nпринтера в EEPROM?"
