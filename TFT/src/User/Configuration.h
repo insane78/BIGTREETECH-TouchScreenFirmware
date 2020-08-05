@@ -69,11 +69,13 @@
  *  Text displayed at the top of the TFT in Marlin Mode.
  */
 #define ST7920_BANNER_TEXT "LCD12864 Simulator"
+#define HD44780_BANNER_TEXT "LCD2004 Simulator"
 
 /**
  *  show banner text at the top of the TFT in Marlin Mode.
  */
-#define ST7920_SHOW_BANNER true //to enabled: true | to disabled: false
+#define ST7920_SHOW_BANNER  true //to enabled: true | to disabled: false
+#define HD44780_SHOW_BANNER true 
 /**
  * Run Marlin Mode in Fullscreen
  *
@@ -215,6 +217,27 @@
  * and send "M420 S1" to enable leveling state after startup
  */
 #define AUTO_SAVE_LOAD_LEVELING_VALUE true //to enabled: true | to disabled: false
+
+/**
+ * Enable Unified Bed Leveling options.
+ *  Will attempt to auto detect and enable specific UBL options.
+ * 
+ * WARNING - If you're not sure, leave on auto-detect or disabled.
+ *           UBL has extra options other leveling systems might not have.
+ * 
+ * Options:  0: Disabled    1: Enabled    2: Auto-detect [default]
+ * 
+ */
+#define ENABLE_UBL_VALUE 2
+
+/**
+ * Enable friendly probe offset language.
+ * 
+ * Decrease/increase and "-" & "+" icons are replaced with down/up and friendly icons
+ * 
+ * Options:  0: Disabled    1: Enabled
+ */
+#define FRIENDLY_PROBE_OFFSET_LANGUAGE 1
 
 /**
  * Manual Leveling
