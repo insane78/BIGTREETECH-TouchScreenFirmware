@@ -14,11 +14,14 @@ P_PROBE_OFFSET,
 P_BUMPSENSITIVITY,
 P_FWRETRACT,
 P_FWRECOVER,
+P_AUTO_RETRACT,
 P_LIN_ADV,
 P_ABL_STATE,
+P_OFFSET_TOOL,
 // Keep below items always at the end
-P_RESET_SETTINGS,
+P_SAVE_SETTINGS,
 P_RESTORE_SETTINGS,
+P_RESET_SETTINGS,
 P_ITEMSCOUNT
 }PARAMETER_NAME;
 
@@ -53,8 +56,10 @@ float ProbeOffset[3];
 float BumpSensitivity[3];
 float FwRetract[4];
 float FwRecover[4];
-float LinAdvance[1];
+float AutoRetract[1];
+float LinAdvance[2];
 float ABLState[2];
+float OffsetTool[3];
 }PARAMETERS;
 
 extern PARAMETERS infoParameters;
@@ -63,6 +68,7 @@ extern char *const axisDisplayID[STEPPER_COUNT];
 extern const LABEL accel_disp_ID[];
 extern const LABEL retract_disp_ID[];
 extern const LABEL recover_disp_ID[];
+extern const LABEL retract_auto_ID[];
 
 float getParameter(PARAMETER_NAME name, uint8_t index);
 void setParameter(PARAMETER_NAME name, uint8_t index, float val);
