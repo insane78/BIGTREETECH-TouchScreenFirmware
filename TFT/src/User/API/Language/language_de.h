@@ -56,6 +56,7 @@
     #define STRING_BLTOUCH_REPEAT         "widerholen"
     #define STRING_Z_OFFSET               "Delta Z"
     #define STRING_PROBE_OFFSET           "Delta Fühler"
+    #define STRING_HOME_OFFSET            "Home Offset"
     #define STRING_CONFIRMATION           "Sicher?"
     #define STRING_DOWN                   "ab"
     #define STRING_UP                     "auf"
@@ -85,6 +86,8 @@
     #define STRING_RESUME                 "Wiederaufnahme"
     #define STRING_LOAD                   "laden"
     #define STRING_UNLOAD                 "entladen"
+    #define STRING_LOAD_UNLOAD            "Load/Unload"  // needs translation
+    #define STRING_LOAD_UNLOAD_SHORT      "(Un)Load"  // needs translation
     #define STRING_SLOW_SPEED             "langsam"
     #define STRING_NORMAL_SPEED           "normal"
     #define STRING_FAST_SPEED             "schnell"
@@ -275,5 +278,9 @@
     #define STRING_NOTIFICATIONS          "Benachrichtigungen"
     #define STRING_MESH_EDITOR            "Mesh edit."
     #define STRING_MESH_TUNER             "Mesh anp."
+    #define STRING_CASE_LIGHT             "Case light"
+    #define STRING_LOAD_STARTED           "Filament load procedure started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filament unload sequence started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_HEATERS_ON             "Some heaters are still ON.\nDo you want to stop them?"  // translation needed
 
 #endif

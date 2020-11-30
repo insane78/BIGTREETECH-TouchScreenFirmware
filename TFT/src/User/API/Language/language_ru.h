@@ -56,6 +56,7 @@
     #define STRING_BLTOUCH_REPEAT         "Точность Z"
     #define STRING_Z_OFFSET               "Отступ Z"
     #define STRING_PROBE_OFFSET           "Смещение датчика"
+    #define STRING_HOME_OFFSET            "Дом - отступы"
     #define STRING_CONFIRMATION           "Вы уверены?"
     #define STRING_DOWN                   "Вниз"
     #define STRING_UP                     "Вверх"
@@ -63,7 +64,7 @@
     #define STRING_RESTORE                "Вернуть"
     #define STRING_RESET                  "Сброс"
     #define STRING_DEFAULT                "По умолчанию"
-    #define STRING_CLEAR                  "Очистить"
+    #define STRING_CLEAR                  "Убрать"
     #define STRING_NEXT                   "Следующий"
     #define STRING_DISTANCE               "Отступы"
     #define STRING_INVALID_VALUE          "Остутствуют правильные значения!"
@@ -79,12 +80,14 @@
     #define STRING_START                  "Начать"
     #define STRING_STOP                   "Стоп"
     #define STRING_BACK                   "Назад"
-    #define STRING_PAGE_UP                "\u0899 Стр." //Left Arrow
-    #define STRING_PAGE_DOWN              "Стр. \u089A" //Right Arrow
+    #define STRING_PAGE_UP                "<---"
+    #define STRING_PAGE_DOWN              "--->"
     #define STRING_PAUSE                  "Пауза"
     #define STRING_RESUME                 "Продолжить"
     #define STRING_LOAD                   "Загрузка"
     #define STRING_UNLOAD                 "Выгрузка"
+    #define STRING_LOAD_UNLOAD            "Load/Unload"  // needs translation
+    #define STRING_LOAD_UNLOAD_SHORT      "(Un)Load"  // needs translation
     #define STRING_SLOW_SPEED             "Медленно"
     #define STRING_NORMAL_SPEED           "Обычно"
     #define STRING_FAST_SPEED             "Быстро"
@@ -275,5 +278,9 @@
     #define STRING_NOTIFICATIONS          "Уведомления"
     #define STRING_MESH_EDITOR            "Сетка ред."
     #define STRING_MESH_TUNER             "Сетка настр."
+    #define STRING_CASE_LIGHT             "Подсветка"
+    #define STRING_LOAD_STARTED           "Filament load procedure started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filament unload sequence started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_HEATERS_ON             "Some heaters are still ON.\nDo you want to stop them?"  // translation needed
 
 #endif

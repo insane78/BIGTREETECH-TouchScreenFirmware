@@ -56,6 +56,7 @@
     #define STRING_BLTOUCH_REPEAT         "Herhaal"
     #define STRING_Z_OFFSET               "Z Offset"
     #define STRING_PROBE_OFFSET           "Probe Offset"
+    #define STRING_HOME_OFFSET            "Home Offset"
     #define STRING_CONFIRMATION           "Weet u het zeker?"
     #define STRING_DOWN                   "Omlaag"
     #define STRING_UP                     "Omhoog"
@@ -85,6 +86,8 @@
     #define STRING_RESUME                 "Hervatten"
     #define STRING_LOAD                   "Laden"
     #define STRING_UNLOAD                 "Lossen"
+    #define STRING_LOAD_UNLOAD            "Load/Unload"  // needs translation
+    #define STRING_LOAD_UNLOAD_SHORT      "(Un)Load"  // needs translation
     #define STRING_SLOW_SPEED             "Traag"
     #define STRING_NORMAL_SPEED           "Normaal"
     #define STRING_FAST_SPEED             "Snel"
@@ -275,5 +278,9 @@
     #define STRING_NOTIFICATIONS          "Notifications"
     #define STRING_MESH_EDITOR            "Mesh edit"
     #define STRING_MESH_TUNER             "Mesh tuner"
+    #define STRING_CASE_LIGHT             "Case light"
+    #define STRING_LOAD_STARTED           "Filament load procedure started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filament unload sequence started.\nWaiting for the hotend to reach\nthe desired temperature.\nPlease stand by."  // translation needed
+    #define STRING_HEATERS_ON             "Some heaters are still ON.\nDo you want to stop them?"  // translation needed
 
 #endif
