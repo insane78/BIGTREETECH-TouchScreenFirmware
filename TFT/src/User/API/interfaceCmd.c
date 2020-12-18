@@ -784,6 +784,14 @@ void sendQueueCmd(void)
             }
             break;
         #endif
+
+        #ifdef LOAD_UNLOAD_M701_M702
+          case 701:  // M701 Load filament
+          case 702:  // M702 Unload filament
+            infoHost.wait = true;
+            break;
+        #endif
+
         case 851: //M851 Z probe offset
           if(cmd_seen('X')) setParameter(P_PROBE_OFFSET, X_AXIS, cmd_float());
           if(cmd_seen('Y')) setParameter(P_PROBE_OFFSET, Y_AXIS, cmd_float());
@@ -882,17 +890,23 @@ void sendQueueCmd(void)
 
         case 92: //G92
         {
-          AXIS i;
           bool coorRelative = coorGetRelative();
           bool eRelative = eGetRelative();
           // Set to absolute mode
           coorSetRelative(false);
           eSetRelative(false);
-          for(i=X_AXIS;i<TOTAL_AXIS;i++)
+          for(AXIS i = X_AXIS; i < TOTAL_AXIS; i++)
           {
             if(cmd_seen(axis_id[i]))
             {
-              coordinateSetAxisTarget(i,cmd_float());
+              coordinateSetAxisTarget(i, cmd_float());
+              #ifdef FIL_RUNOUT_PIN
+                if (i == E_AXIS)
+                {
+                  // Reset SFS status, Avoid false Filament runout caused by G92 resetting E-axis position
+                  FIL_SFS_SetAlive(true);
+                }
+              #endif
             }
           }
           // Restore mode
