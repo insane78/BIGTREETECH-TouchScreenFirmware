@@ -27,12 +27,13 @@ void menuLanguage(void)
 
   // fill language items
   uint8_t tmp_language = infoSettings.language;
-  for(uint8_t i = 0; i < COUNT(totalItems); i++) {
-    if (i == tmp_language) {
+  for(uint8_t i = 0; i < COUNT(totalItems); i++)
+  {
+    if (i == tmp_language)
       totalItems[i].icon = ICONCHAR_CHECKED;
-    } else {
+    else
       totalItems[i].icon = ICONCHAR_UNCHECKED;
-    }
+
     infoSettings.language = i;
     totalItems[i].itemType = LIST_LABEL;
     totalItems[i].titlelabel.address = textSelect(LABEL_LANGUAGE);
@@ -59,15 +60,17 @@ void menuLanguage(void)
       break;
 
     default:
-      if(key_num < LISTITEM_PER_PAGE){
+      if(key_num < LISTITEM_PER_PAGE)
+      {
         uint16_t cur_item = infoSettings.language;
         uint16_t tmp_i = listWidgetGetCurPage() * LISTITEM_PER_PAGE + key_num;
-        if (tmp_i < LANGUAGE_NUM && tmp_i != cur_item) { // has changed
+        if (tmp_i < LANGUAGE_NUM && tmp_i != cur_item)  // has changed
+        {
           totalItems[cur_item].icon = ICONCHAR_UNCHECKED;
-          listWidgetRefreshItem(cur_item); // refresh unchecked status
+          listWidgetRefreshItem(cur_item);  // refresh unchecked status
           cur_item = tmp_i;
           totalItems[cur_item].icon = ICONCHAR_CHECKED;
-          listWidgetRefreshItem(cur_item); // refresh checked status
+          listWidgetRefreshItem(cur_item);  // refresh checked status
 
           infoSettings.language = cur_item;
           menuDrawTitle(textSelect(LABEL_LANGUAGE));
@@ -97,11 +100,15 @@ void menuSimulatorBackGroundColor(void)
   uint8_t cur_item = 0;
 
   // fill items
-  for(uint8_t i = 0; i < COUNT(totalItems); i++) {
-    if (infoSettings.marlin_mode_bg_color == lcd_colors[i]) {
+  for (uint8_t i = 0; i < COUNT(totalItems); i++)
+  {
+    if (infoSettings.marlin_mode_bg_color == lcd_colors[i])
+    {
       totalItems[i].icon = ICONCHAR_CHECKED;
       cur_item = i;
-    } else {
+    }
+    else
+    {
       totalItems[i].icon = ICONCHAR_UNCHECKED;
     }
     totalItems[i].itemType = LIST_LABEL;
@@ -128,14 +135,16 @@ void menuSimulatorBackGroundColor(void)
       break;
 
     default:
-      if(key_num < LISTITEM_PER_PAGE){
+      if (key_num < LISTITEM_PER_PAGE)
+      {
         uint16_t tmp_i = listWidgetGetCurPage() * LISTITEM_PER_PAGE + key_num;
-        if (tmp_i < LCD_COLOR_COUNT && tmp_i != cur_item) { // has changed
+        if (tmp_i < LCD_COLOR_COUNT && tmp_i != cur_item) // has changed
+        {
           totalItems[cur_item].icon = ICONCHAR_UNCHECKED;
-          listWidgetRefreshItem(cur_item); // refresh unchecked status
+          listWidgetRefreshItem(cur_item);  // refresh unchecked status
           cur_item = tmp_i;
           totalItems[cur_item].icon = ICONCHAR_CHECKED;
-          listWidgetRefreshItem(cur_item); // refresh checked status
+          listWidgetRefreshItem(cur_item);  // refresh checked status
 
           infoSettings.marlin_mode_bg_color = lcd_colors[cur_item];
         }
@@ -161,11 +170,15 @@ void menuSimulatorFontColor(void)
   uint8_t cur_item = 0;
 
   // fill items
-  for(uint8_t i = 0; i < COUNT(totalItems); i++) {
-    if (infoSettings.marlin_mode_font_color == lcd_colors[i]) {
+  for (uint8_t i = 0; i < COUNT(totalItems); i++)
+  {
+    if (infoSettings.marlin_mode_font_color == lcd_colors[i])
+    {
       totalItems[i].icon = ICONCHAR_CHECKED;
       cur_item = i;
-    } else {
+    }
+    else
+    {
       totalItems[i].icon = ICONCHAR_UNCHECKED;
     }
     totalItems[i].itemType = LIST_LABEL;
@@ -192,9 +205,11 @@ void menuSimulatorFontColor(void)
       break;
 
     default:
-      if(key_num < LISTITEM_PER_PAGE){
+      if (key_num < LISTITEM_PER_PAGE)
+      {
         uint16_t tmp_i = listWidgetGetCurPage() * LISTITEM_PER_PAGE + key_num;
-        if (tmp_i < LCD_COLOR_COUNT && tmp_i != cur_item) { // has changed
+        if (tmp_i < LCD_COLOR_COUNT && tmp_i != cur_item)  // has changed
+        {
           totalItems[cur_item].icon = ICONCHAR_UNCHECKED;
           listWidgetRefreshItem(cur_item); // refresh unchecked status
           cur_item = tmp_i;
@@ -227,9 +242,9 @@ void menuSoundSettings(void)
   // icon                 ItemType      Item Title        item value text(only for custom value)
   {
     {ICONCHAR_TOGGLE_ON, LIST_TOGGLE,  LABEL_TOUCH_SOUND,  LABEL_BACKGROUND},
-    {ICONCHAR_TOGGLE_ON, LIST_TOGGLE,  LABEL_ALERT_SOUND,  LABEL_BACKGROUND},
     {ICONCHAR_TOGGLE_ON, LIST_TOGGLE,  LABEL_TOAST_SOUND,  LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND,   LABEL_BACKGROUND},
+    {ICONCHAR_TOGGLE_ON, LIST_TOGGLE,  LABEL_ALERT_SOUND,  LABEL_BACKGROUND},
+    {ICONCHAR_TOGGLE_ON, LIST_TOGGLE,  LABEL_HEATER_SOUND,  LABEL_BACKGROUND},
     {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND,   LABEL_BACKGROUND},
     {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND,   LABEL_BACKGROUND},
     {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND,   LABEL_BACKGROUND},
@@ -237,8 +252,9 @@ void menuSoundSettings(void)
   };
 
   sounditems.items[0].icon = (infoSettings.touchSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
-  sounditems.items[1].icon = (infoSettings.alertSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
   sounditems.items[2].icon = (infoSettings.toastSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
+  sounditems.items[1].icon = (infoSettings.alertSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
+  sounditems.items[3].icon = (infoSettings.heaterSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
 
   KEY_VALUES key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
@@ -257,14 +273,20 @@ void menuSoundSettings(void)
       break;
 
     case KEY_ICON_1:
+      infoSettings.toastSound = (infoSettings.toastSound + 1) % 2;
+      sounditems.items[key_num].icon = (infoSettings.toastSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
+      menuDrawListItem(&sounditems.items[key_num], key_num);
+      break;
+
+    case KEY_ICON_2:
       infoSettings.alertSound = (infoSettings.alertSound + 1) % 2;
       sounditems.items[key_num].icon = (infoSettings.alertSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
       menuDrawListItem(&sounditems.items[key_num], key_num);
       break;
 
-    case KEY_ICON_2:
-      infoSettings.toastSound = (infoSettings.toastSound + 1) % 2;
-      sounditems.items[key_num].icon = (infoSettings.toastSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
+    case KEY_ICON_3:
+      infoSettings.heaterSound = (infoSettings.heaterSound + 1) % 2;
+      sounditems.items[key_num].icon = (infoSettings.heaterSound == 1) ? ICONCHAR_TOGGLE_ON : ICONCHAR_TOGGLE_OFF;
       menuDrawListItem(&sounditems.items[key_num], key_num);
       break;
 

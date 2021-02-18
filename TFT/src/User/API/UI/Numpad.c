@@ -50,7 +50,8 @@ void Draw_keyboard(u8 * title, bool NumberOnly, bool negative)
 
     GUI_SetColor(infoSettings.list_border_color);
      //draw button borders
-    for (int i = 0;i<3;i++){
+    for (int i = 0; i < 3; i++)
+    {
       GUI_DrawLine(rect_of_numkey[i].x1,rect_of_numkey[i].y0,rect_of_numkey[12+i].x1,rect_of_numkey[12+i].y1);
       GUI_DrawLine(rect_of_numkey[i*4].x0,rect_of_numkey[i*4].y1,rect_of_numkey[3+i*4].x1,rect_of_numkey[3+i*4].y1);
     }
@@ -198,7 +199,7 @@ float numPadFloat(u8* title, float old_val, float reset_val, bool negative)
           BUZZER_PLAY(sound_ok);
           setLargeFont(false);
           touchSound = true;
-          return strtof(ParameterBuf, NULL);
+          return strtod(ParameterBuf, NULL);
         }
       default:
         break;

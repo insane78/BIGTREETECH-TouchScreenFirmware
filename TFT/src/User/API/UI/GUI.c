@@ -1075,11 +1075,12 @@ void GUI_DrawWindow(const WINDOW *window, const uint8_t *title, const uint8_t *i
 
     //draw title text
     GUI_SetColor(window->title.fontColor);
-    GUI_DispString(w_rect.x0 + BYTE_HEIGHT * 2, title_txt_y0, title);
+    GUI_DispLenString(w_rect.x0 + BYTE_HEIGHT * 2, title_txt_y0, title,
+                      window->rect.x1 - (w_rect.x0 + BYTE_HEIGHT * 2), true);
 
     //draw info text
     GUI_SetColor(window->info.fontColor);
-    if(GUI_StrPixelWidth(inf) < w_rect.x1 - w_rect.x0)
+    if ((GUI_StrPixelWidth(inf) < w_rect.x1 - w_rect.x0) && (strchr((const char *)inf,'\n') == NULL))
       GUI_DispStringInRect(w_rect.x0, title_y1, w_rect.x1, action_y0, inf);
     else
       GUI_DispStringInRectEOL(w_rect.x0 + margin, title_y1 + margin, w_rect.x1 - margin, action_y0 - margin, inf);
