@@ -1,43 +1,42 @@
 #include "MeshTuner.h"
 #include "includes.h"
 
-static u8 curUnit_index = 0;
+static uint8_t curUnit_index = 0;
 
-/* Init mesh point */
+// Init mesh point
 static inline void meshInitPoint(uint16_t col, uint16_t row, float value)
 {
-//  probeHeightEnable();                                     // temporary disable software endstops
+//  probeHeightEnable();  // temporary disable software endstops
 
   // Z offset gcode sequence start
-  if (infoMachineSettings.zProbe == ENABLED)
-    probeHeightStop();                                     // raise nozzle
-
-  mustStoreCmd("G42 I%d J%d\n", col, row);                 // move nozzle to X and Y coordinates corresponding
-                                                           // to the column and row in the bed leveling mesh grid
-  probeHeightStart(value);                                 // lower nozzle to provided absolute Z point
-  probeHeightRelative();                                   // set relative position mode
+  mustStoreCmd("G42 I%d J%d\n", col, row);  // move nozzle to X and Y coordinates corresponding to the column and row in the bed leveling mesh grid
+  probeHeightStart(value, false);           // lower nozzle to provided absolute Z point
+  probeHeightRelative();                    // set relative position mode
 }
 
-/* Reset mesh point */
+// Reset mesh point
 static inline void meshResetPoint(void)
 {
   // Z offset gcode sequence stop
   if (infoMachineSettings.zProbe == ENABLED)
-    probeHeightStop();                                     // raise nozzle
+    probeHeightStop(infoSettings.level_z_raise);  // raise nozzle
 
-  probeHeightAbsolute();                                   // set absolute position mode
+  probeHeightAbsolute();  // set absolute position mode
 
-//  probeHeightDisable();                                    // restore original software endstops state
+//  probeHeightDisable();  // restore original software endstops state
 }
 
 void meshDrawHeader(uint16_t col, uint16_t row)
 {
-  char tempstr[20];
+  char tempstr[25];
 
-  sprintf(tempstr, "I: %d  J: %d", col, row);
+  if (infoMachineSettings.leveling == BL_MBL)
+    sprintf(tempstr, "I:%d J:%d", col, row);
+  else
+    sprintf(tempstr, "I:%d J:%d shim:%.2f", col, row, infoSettings.level_z_pos);
 
   GUI_SetColor(infoSettings.sd_reminder_color);
-  GUI_DispString(exhibitRect.x0, exhibitRect.y0, (u8 *) tempstr);
+  GUI_DispString(exhibitRect.x0, exhibitRect.y0, (uint8_t *) tempstr);
   GUI_SetColor(infoSettings.font_color);
 }
 
@@ -46,42 +45,49 @@ void meshDrawValue(float val)
   char tempstr[20];
 
   sprintf(tempstr, "  %.3f  ", val);
-
   setLargeFont(true);
-  GUI_DispStringInPrect(&exhibitRect, (u8 *) tempstr);
+  GUI_DispStringInPrect(&exhibitRect, (uint8_t *) tempstr);
   setLargeFont(false);
 }
 
 float menuMeshTuner(uint16_t col, uint16_t row, float value)
 {
-
   // 1 title, ITEM_PER_PAGE items (icon + label)
   MENUITEMS meshItems = {
     // title
     LABEL_MESH_TUNER,
-    // icon                         label
-    {{ICON_DEC,                     LABEL_DEC},
-     {ICON_BACKGROUND,              LABEL_BACKGROUND},
-     {ICON_BACKGROUND,              LABEL_BACKGROUND},
-     {ICON_INC,                     LABEL_INC},
-     {ICON_001_MM,                  LABEL_001_MM},
-     {ICON_RESET_VALUE,             LABEL_RESET},
-     {ICON_APPLY,                   LABEL_CONFIRM},
-     {ICON_STOP,                    LABEL_CANCEL},}
+    // icon                          label
+    {
+      #ifdef FRIENDLY_Z_OFFSET_LANGUAGE
+        {ICON_NOZZLE_DOWN,             LABEL_DOWN},
+      #else
+        {ICON_DEC,                     LABEL_DEC},
+      #endif
+      {ICON_BACKGROUND,              LABEL_BACKGROUND},
+      {ICON_BACKGROUND,              LABEL_BACKGROUND},
+      #ifdef FRIENDLY_Z_OFFSET_LANGUAGE
+        {ICON_NOZZLE_UP,               LABEL_UP},
+      #else
+        {ICON_INC,                     LABEL_INC},
+      #endif
+      {ICON_001_MM,                  LABEL_001_MM},
+      {ICON_RESET_VALUE,             LABEL_RESET},
+      {ICON_APPLY,                   LABEL_CONFIRM},
+      {ICON_STOP,                    LABEL_CANCEL},
+    }
   };
-
-  #ifdef FRIENDLY_Z_OFFSET_LANGUAGE
-    meshItems.items[0].icon = ICON_NOZZLE_DOWN;
-    meshItems.items[0].label.index = LABEL_DOWN;
-    meshItems.items[3].icon = ICON_NOZZLE_UP;
-    meshItems.items[3].label.index = LABEL_UP;
-  #endif
 
   KEY_VALUES key_num = KEY_IDLE;
   float now, curValue;
   float unit;
+  float shim;
 
-  meshInitPoint(col, row, value);                          // initialize mesh point
+  if (infoMachineSettings.leveling == BL_MBL)
+    shim = 0.0f;
+  else
+    shim = infoSettings.level_z_pos;
+
+  meshInitPoint(col, row, value + shim);  // initialize mesh point + shim
 
   now = curValue = coordinateGetAxisActual(Z_AXIS);
 
@@ -123,23 +129,23 @@ float menuMeshTuner(uint16_t col, uint16_t row, float value)
         menuDrawItem(&meshItems.items[key_num], key_num);
         break;
 
-      // reset Z height to 0
+      // reset Z height
       case KEY_ICON_5:
-        probeHeightMove(curValue, -1);
+        probeHeightMove(curValue - (value + shim), -1);
         break;
 
       // return new Z height
       case KEY_ICON_6:
-        meshResetPoint();                                  // reset mesh point
+        meshResetPoint();  // reset mesh point
 
-        return curValue;                                   // return current Z height
+        return curValue - shim;  // return current Z height - shim
         break;
 
       // return original Z height
       case KEY_ICON_7:
-        meshResetPoint();                                  // reset mesh point
+        meshResetPoint();  // reset mesh point
 
-        return value;                                      // return original Z height
+        return value;  // return original Z height
         break;
 
       default:

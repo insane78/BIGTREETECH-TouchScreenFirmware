@@ -43,8 +43,8 @@
 #include "buzzer.h"
 
 #include "LCD_Encoder.h"
-#include "ST7920_Simulator.h"
-#include "HD44780_Simulator.h"
+#include "ST7920_Emulator.h"
+#include "HD44780_Emulator.h"
 #include "ui_draw.h"
 #include "touch_process.h"
 #include "serialConnection.h"
@@ -98,6 +98,7 @@
 #include "Babystep.h"
 #include "Extrude.h"
 #include "LoadUnload.h"
+#include "RRFMacros.h"
 #include "Fan.h"
 #include "SettingsMenu.h"
 #include "PrintingMenu.h"
@@ -107,6 +108,7 @@
 #include "SendGcode.h"
 #include "Leveling.h"
 #include "BedLeveling.h"
+#include "BedLevelingLayer2.h"
 #include "MBL.h"
 #include "ABL.h"
 #include "BLTouch.h"
@@ -132,27 +134,28 @@ typedef void (*FP_MENU)(void);
 typedef struct
 {
   FP_MENU menu[MAX_MENU_DEPTH];  // Menu function buffer
-  u8      cur;                   // Current menu index in buffer
-}MENU;
+  uint8_t cur;                   // Current menu index in buffer
+} MENU;
 
 extern MENU infoMenu;
 
 typedef struct
 {
-  bool wait;       //Whether wait for Marlin's response
-  bool rx_ok[_UART_CNT]; //Whether receive Marlin's response or get Gcode by other UART(ESP3D/OctoPrint)
-  bool connected;  //Whether have connected to Marlin
-  bool printing;   //Whether the host is busy in printing execution. ( USB serial printing and GCODE print from onboard)
-}HOST;
+  bool wait;              //Whether wait for Marlin's response
+  bool rx_ok[_UART_CNT];  //Whether receive Marlin's response or get Gcode by other UART(ESP3D/OctoPrint)
+  bool connected;         //Whether have connected to Marlin
+  bool printing;          //Whether the host is busy in printing execution. (USB serial printing and GCODE print from onboard)
+} HOST;
 
 extern HOST infoHost;
 
 typedef struct
 {
   RCC_ClocksTypeDef rccClocks;
-  u32 PCLK1_Timer_Frequency;
-  u32 PCLK2_Timer_Frequency;
-}CLOCKS;
+  uint32_t PCLK1_Timer_Frequency;
+  uint32_t PCLK2_Timer_Frequency;
+} CLOCKS;
+
 extern CLOCKS mcuClocks;
 
 #endif

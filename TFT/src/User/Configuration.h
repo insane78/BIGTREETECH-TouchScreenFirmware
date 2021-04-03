@@ -1,6 +1,6 @@
 #ifndef _CONFIGURATION_H_
 #define _CONFIGURATION_H_
-#define CONFIG_VERSION 20210124
+#define CONFIG_VERSION 20210311
 
 //===========================================================================
 //============================= General Settings ============================
@@ -24,7 +24,7 @@
 
 // Enable Status Screen
 // Enable this to show status screen as the default home screen. Disabling it will show a static menu.
-#define ENABLE_STATUS_SCREEN true  // To enabled: true | To disabled: false (Default: 1)
+#define ENABLE_STATUS_SCREEN true  // To enabled: true | To disabled: false (Default: true)
 
 /**
  * This setting determines the communication speed of the printer.
@@ -96,18 +96,18 @@
 #define MARLIN_FNCOLOR 0  // Default: 0
 
 // Text displayed at the top of the TFT in Marlin Mode
-#define MARLIN_BANNER_TEXT "LCD12864 Emulator"  // Default: "LCD12864 Emulator"
+#define MARLIN_BANNER_TEXT "Marlin Mode"  // Default: "Marlin Mode"
 
 // Show banner text at the top of the TFT in Marlin Mode
 #define MARLIN_SHOW_BANNER true  // To enabled: true | To disabled: false (Default: true)
 
 /**
  * Run Marlin Mode in Fullscreen
-
+ *
  * Options: 0: Disabled (RECOMMENDED FOR TFT24)
  *          1: Enabled
  */
-#define DEFAULT_ST7920_FULLSCREEN_MODE 0  // Default: 0
+#define MARLIN_MODE_FULLSCREEN 0  // Default: 0
 
 /**
  * Keep Serial always On (ONLY SUPPORTED ON TFT24 V1.1, TFT35 V3.0, AND TFT28 V3.0)
@@ -169,7 +169,7 @@
 #define SPEED_ID {"Sp.", "Fr."}  // (speed, flow rate)
 
 // Axes names displayed in Parameter Settings menu
-#define AXIS_DISPLAY_ID  {"X",  "Y",  "Z",   "E",  "E2"}  // (X, Y, Z, E, E2)
+#define AXIS_DISPLAY_ID  {"X",  "Y",  "Z",   "E0",  "E1"}  // (X, Y, Z, E0, E1)
 
 // Default X & Y speed (mm/min)
 #define SPEED_XY_SLOW   1000
@@ -193,6 +193,14 @@
 #define X_MAX_POS 235
 #define Y_MAX_POS 235
 #define Z_MAX_POS 250
+
+/**
+ * Raised Z height for probing
+ * Z height to raise / drop after homing (G28) before starting to probe a point.
+ *
+ * WARNING: It MUST be negative (e.g. -50mm) for a Delta printer to avoid crashing into the top of the tower.
+ */
+#define PROBING_Z_RAISE 20.0f
 
 // Pause Settings
 #define NOZZLE_PAUSE_RETRACT_LENGTH               15  // (mm)
@@ -273,8 +281,8 @@
 
 // Mesh Leveling Max Grid points
 // Set the maximum number of grid points per dimension.
-#define MESH_GRID_MAX_POINTS_X 10  // (Minimum 1, Maximum 15)
-#define MESH_GRID_MAX_POINTS_Y 10  // (Minimum 1, Maximum 15)
+#define MESH_GRID_MAX_POINTS_X 15  // (Minimum 1, Maximum 15)
+#define MESH_GRID_MAX_POINTS_Y 15  // (Minimum 1, Maximum 15)
 
 /**
  * Auto save/load Bed Leveling data
@@ -291,11 +299,19 @@
 #define PID_PROCESS_TIMEOUT (15 * 60000)  // (MilliSeconds, 1 minute = 60000 MilliSeconds)
 
 /**
- * M600, M601 ; pause print
+ * M600 ; emulate M600
+ * The TFT intercepts the M600 gcode (filament change) and emulates the logic instead of demanding it to Marlin firmware.
+ *
+ * NOTE: Enable it, in case Marlin firmware does not properly support M600 on the mainboard.
+ */
+#define EMULATE_M600 true  // To enabled: true | To disabled: false (Default: true)
+
+/**
+ * M601 ; pause print
  * PrusaSlicer can add M601 on certain height.
  * Acts here like manual pause.
  */
-#define NOZZLE_PAUSE_M600_M601
+#define NOZZLE_PAUSE_M601
 
 /**
  * M701, M702 ; Marlin filament load unload gcodes support
@@ -328,7 +344,7 @@
 /**
  * Quick EEPROM Menu
  * Enable EEPROM menu (save/load/reset buttons) in Settings > Machine Menu.
-
+ *
  * NOTE: If disabled, EEPROM operations can also be accessed in the (settings > machine > parameters) menu.
  */
 #define QUICK_EEPROM_BUTTON
@@ -419,30 +435,34 @@
 //#define MESH_LEFT_KEYBOARD
 
 //
-// Terminal settings
+// Terminal Keyboard / Numpad settings
 //
 
+// Terminal Keyboard / Numpad theme
+// Uncomment to enable Material theme for keyboard and Numpad
+//#define KEYBOARD_MATERIAL_THEME // Default: disabled
+
 /**
- * Color scheme for the Terminal Keyboard
+ * Color scheme for the Terminal Keyboard / Numpad
  *
  * Options: [0: Default, 1: Invert, 2: High-Contrast]
  *  Default: The keyboard follows system background and border colors.
  *  Invert: The keyboard is drawn with background swapped with border colors.
  *  High-Contrast: Use white and black colors for high contrast.
  */
-#define TERMINAL_KEYBOARD_COLOR_LAYOUT 0  // Default: 0
+#define KEYBOARD_COLOR_LAYOUT 0  // Default: 0
 
 /**
  * QWERTY/QWERTZ keyboard layout
  * Keyboard layout for Terminal Keyboard (Only for TFT70 V3.0).
  *
- * Options: [0: Default:, 1: qwerty, 2: qwertz, 3: azerty]
+ * Options: [0: qwerty, 1: qwertz, 2: azerty]
  *  default: The keyboard has an alphabetically order.
  *  qwerty: The typically keyboard Layout for english.
  *  qwertz: The typically keyboard Layout for german.
  *  azerty: The typically keyboard Layout for french.
  */
-#define TERMINAL_KEYBOARD_LAYOUT 1  // Default: 0
+#define TERMINAL_KEYBOARD_LAYOUT 0  // Default: 0
 
 
 //===========================================================================
